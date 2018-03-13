@@ -19,6 +19,11 @@ public class SocketDemo {
 		new Receive().start();
 		new Sender().start();
 	}
+
+	public static void main(String[] args) {
+		//开启接收消息线程
+				new Receive().start();
+	}
 }
 
 class Receive extends Thread{

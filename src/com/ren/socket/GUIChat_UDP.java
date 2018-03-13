@@ -26,8 +26,17 @@ import java.net.SocketException;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 
+import javax.swing.JFrame;
 
-public class GUIChat extends Frame{
+/**
+ * 先调整窗口大小才会显示出组件，而不是立马显示出组件，在组件还未添加到面板前就将窗口
+ * （JFrame）设为可见（setVisible（）），控件并不会引发重绘。解决方法很简单，
+ * 只需要等所有组件都准备好以后才将JFrame的setVisible（）设置为true。
+ * 非要在调用setVisible（）之后添加组件，那么你也可以这样做：getContentPane().invalidate();
+ * 
+ * 即便这样做了，也没有达到想要的效果
+ */
+public class GUIChat_UDP extends JFrame{
 	
 	private static final long serialVersionUID = 1L;
 	private Button send;
@@ -40,11 +49,14 @@ public class GUIChat extends Frame{
 	private DatagramSocket socket;
 	private BufferedWriter writer;
 
-	public GUIChat(){
+	public GUIChat_UDP(){
 		Init();
 		southPanel();
 		centerPanel();
 		event();
+		
+		
+		getContentPane().invalidate();
 	}
 
 	private void centerPanel() {
@@ -148,7 +160,7 @@ public class GUIChat extends Frame{
 			}
 		});
 		//清空屏幕
-		log.addActionListener(new ActionListener() {
+		clear.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -281,7 +293,7 @@ public class GUIChat extends Frame{
 	}
 
 	public static void main(String[] args) {
-		new GUIChat();
+		new GUIChat_UDP();
 	}
 
 }
